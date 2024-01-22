@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "extensions")
+@Table(name = "extension")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Extension {
@@ -21,5 +21,5 @@ public class Extension {
     private long id;
 
     @Column(unique = true, nullable = false)
-    private String extension;
+    private String name;
 }
