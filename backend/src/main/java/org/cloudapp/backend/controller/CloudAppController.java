@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @SpringBootApplication
 @RestController
-@RequestMapping(path = "api/data")
+@RequestMapping(path = "data")
 public class CloudAppController {
     @Autowired
     private CloudAppService service;
