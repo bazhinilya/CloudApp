@@ -8,11 +8,12 @@ import org.cloudapp.backend.entity.Extension;
 import org.cloudapp.backend.entity.FileData;
 import org.cloudapp.backend.repository.ExtensionRepository;
 import org.cloudapp.backend.repository.FileDataRepository;
+import org.cloudapp.backend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -22,29 +23,32 @@ public class CloudAppService {
     @Autowired
     private ExtensionRepository extensionRepository;
 
-    public ResponseEntity<List<?>> getAll() {
-        return new ResponseEntity<>(fileDataRepository.findAll(), HttpStatus.OK);
+    // TODO: add own Exception
+    public ResponseEntity<List<?>> getAll(int offset) {
+        return new ResponseEntity<>(
+                fileDataRepository.findAll(PageRequest.of(offset, 10)).toList(),
+                HttpStatus.OK);
     }
 
-    @Transactional
     public ResponseEntity<?> uploadFile(MultipartFile uploadFile) throws IOException {
-        String fileName = uploadFile.getOriginalFilename();
-        String fileNameWithoutExtension = fileName.substring(0, fileName.lastIndexOf('.'));
-        String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1);
-        FileData file = fileDataRepository.save(new FileData(
-                new Random().nextLong(),
-                fileNameWithoutExtension,
-                uploadFile.getBytes(),
-                getExtensionByName(fileExtension)));
-        return new ResponseEntity<>(file, HttpStatus.OK);
+        String fileName = Utils.getFileName(uploadFile.getOriginalFilename());
+        if (fileDataRepository.findByName(fileName) != null)
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        String fileExtension = Utils.getFileExtension(uploadFile.getOriginalFilename());
+        fileDataRepository.save(
+                new FileData(
+                        new Random().nextLong(),
+                        fileName,
+                        uploadFile.getBytes(),
+                        getExtensionId(fileExtension)
+                ));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private Extension getExtensionByName(String extension) {
-        Extension extensionOfDb = extensionRepository.findByName(extension);
+    private Extension getExtensionId(String extension) {
+        var extensionOfDb = extensionRepository.findByName(extension);
         if (extensionOfDb != null)
             return extensionOfDb;
-        extensionOfDb = new Extension(new Random().nextLong(), extension);
-        extensionRepository.save(extensionOfDb);
-        return extensionOfDb;
+        return extensionRepository.save(new Extension(new Random().nextLong(), extension));
     }
 }
