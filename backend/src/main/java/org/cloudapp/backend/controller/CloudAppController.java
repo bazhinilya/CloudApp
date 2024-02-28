@@ -3,9 +3,14 @@ package org.cloudapp.backend.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.cloudapp.backend.entity.FileData;
 import org.cloudapp.backend.service.CloudAppService;
+import org.cloudapp.backend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,12 +28,24 @@ public class CloudAppController {
     private CloudAppService service;
 
     @GetMapping("files/{offset}")
-    public ResponseEntity<List<?>> getData(@PathVariable int offset) {
-        return service.getAll(offset);
+    public ResponseEntity<List<?>> get(@PathVariable int offset) throws IOException {
+        return ResponseEntity.ok(service.getAll(offset));
     }
 
-    @PostMapping
-    public ResponseEntity<?> postData(@RequestParam("file") MultipartFile file) throws IOException {
-        return service.uploadFile(file);
+    @GetMapping("download/{fileName}")
+    public ResponseEntity<?> get(@PathVariable String fileName) throws IOException {
+        FileData data = service.getFile(fileName);
+        String extension = data.getExtension().getName();
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + data.getName() + "."
+                                + Utils.getFileExtension(extension) + "\"")
+                .contentType(MediaType.parseMediaType(extension))
+                .body(new ByteArrayResource(data.getByteCode()));
+    }
+
+    @PostMapping("upload")
+    public ResponseEntity<?> post(@RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.ok(service.uploadFile(file));
     }
 }

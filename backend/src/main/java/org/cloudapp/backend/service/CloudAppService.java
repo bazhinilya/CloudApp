@@ -12,7 +12,6 @@ import org.cloudapp.backend.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,30 +22,30 @@ public class CloudAppService {
     @Autowired
     private ExtensionRepository extensionRepository;
 
-    // TODO: add own Exception
-    public ResponseEntity<List<?>> getAll(int offset) {
-        return new ResponseEntity<>(
-                fileDataRepository.findAll(PageRequest.of(offset, 10)).toList(),
-                HttpStatus.OK);
+    public List<?> getAll(int offset) throws IOException {
+        return fileDataRepository.findAll(PageRequest.of(offset, 10)).toList();
     }
 
-    public ResponseEntity<?> uploadFile(MultipartFile uploadFile) throws IOException {
+    public FileData getFile(String fileName) throws IOException {
+        return fileDataRepository.findByName(Utils.getFileName(fileName));
+    }
+
+    public HttpStatus uploadFile(MultipartFile uploadFile) throws IOException {
         String fileName = Utils.getFileName(uploadFile.getOriginalFilename());
-        if (fileDataRepository.findByName(fileName) != null)
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        String fileExtension = Utils.getFileExtension(uploadFile.getOriginalFilename());
+        if (fileDataRepository.existsByName(fileName))
+            return HttpStatus.CONFLICT;
         fileDataRepository.save(
                 new FileData(
                         new Random().nextLong(),
                         fileName,
                         uploadFile.getBytes(),
-                        getExtensionId(fileExtension)
+                        getExtensionId(uploadFile.getContentType())
                 ));
-        return new ResponseEntity<>(HttpStatus.OK);
+        return HttpStatus.OK;
     }
 
     private Extension getExtensionId(String extension) {
-        var extensionOfDb = extensionRepository.findByName(extension);
+        Extension extensionOfDb = extensionRepository.findByName(extension);
         if (extensionOfDb != null)
             return extensionOfDb;
         return extensionRepository.save(new Extension(new Random().nextLong(), extension));
