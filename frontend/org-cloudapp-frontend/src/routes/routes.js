@@ -1,6 +1,6 @@
-import Home from '../pages/Home'
-import Recent from '../pages/Recent'
-import Trash from '../pages/Trash'
+import Home from '../pages/AppRouter/Routes/Home'
+import Recent from '../pages/AppRouter/Routes/Recent'
+import Trash from '../pages/AppRouter/Routes/Trash'
 
 export const routes = [
     { path: '/', element: <Home />, exact: true, name: 'Home' },

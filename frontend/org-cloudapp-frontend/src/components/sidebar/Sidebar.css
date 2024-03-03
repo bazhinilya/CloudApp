@@ -1,0 +1,43 @@
+.sidebar {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding: 20px;
+    color: white;
+}
+
+.sidebar__links {
+    margin-top: 80px;
+}
+
+.sidebar__links__link {
+    font-size: 24px;
+    padding: 20px 100px;
+}
+
+.sidebar a {
+    padding: 10px 8px 6px 16px;
+    font-size: 25px;
+    color: #8b8a8a;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar a:hover {
+    border-radius: 12px;
+    background-color: #484bbb14;
+    color: #494ecc;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+}

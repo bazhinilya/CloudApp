@@ -22,8 +22,8 @@ public class CloudAppService {
     @Autowired
     private ExtensionRepository extensionRepository;
 
-    public List<?> getAll(int offset) throws IOException {
-        return fileDataRepository.findAll(PageRequest.of(offset, 10)).toList();
+    public List<?> getAll(int page) throws IOException {
+        return fileDataRepository.findAll(PageRequest.of(page, 10)).toList();
     }
 
     public FileData getFile(String fileName) throws IOException {

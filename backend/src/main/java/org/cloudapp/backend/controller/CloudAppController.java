@@ -12,6 +12,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,13 +24,14 @@ import org.springframework.web.multipart.MultipartFile;
 @SpringBootApplication
 @RestController
 @RequestMapping(path = "data")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CloudAppController {
     @Autowired
     private CloudAppService service;
 
-    @GetMapping("files/{offset}")
-    public ResponseEntity<List<?>> get(@PathVariable int offset) throws IOException {
-        return ResponseEntity.ok(service.getAll(offset));
+    @GetMapping("files/{page}")
+    public ResponseEntity<List<?>> get(@PathVariable int page) throws IOException {
+        return ResponseEntity.ok(service.getAll(page));
     }
 
     @GetMapping("download/{fileName}")

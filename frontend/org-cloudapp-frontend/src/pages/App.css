@@ -1,0 +1,19 @@
+.split {
+    background-color: #28282b;
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+}
+
+.right {
+    left: 0;
+}
+
+.left {
+    height: 100%;
+    width: 80%;
+    right: 0;
+}
