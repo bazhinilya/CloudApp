@@ -10,26 +10,30 @@
 }
 
 .sidebar__links {
-    margin-top: 80px;
+    margin-top: 40px;
 }
 
 .sidebar__links__link {
-    font-size: 24px;
-    padding: 20px 100px;
+    font-size: 18px;
+    padding: 10px 10px;
+}
+
+span{
+    padding-left: 20px;
 }
 
 .sidebar a {
+    margin-top: 20px;
     padding: 10px 8px 6px 16px;
-    font-size: 25px;
     color: #8b8a8a;
     display: flex;
-    justify-content: center;
+    /* justify-content: baseline; */
 }
 
 .sidebar a:hover {
     border-radius: 12px;
     background-color: #484bbb14;
-    color: #494ecc;
+    color: #393dbd;
 }
 
 @media screen and (max-height: 450px) {

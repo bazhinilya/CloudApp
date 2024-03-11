@@ -1,0 +1,24 @@
+.my-input-box {
+    margin: 20px;
+}
+
+.my-input {
+    background-color: unset;
+    color: #8b8a8a;
+    border-width: 0px;
+    /* background-image: url('searchicon.png'); */
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 24px;
+    padding: 20px;
+}
+
+.my-input:hover {
+    border-radius: 20px;
+    background-color: #484bbb14;
+}
+
+.my-input:focus {
+    border-radius: 20px;
+    background-color: #484bbb14;
+}
