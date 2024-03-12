@@ -1,6 +1,6 @@
-import Home from '../pages/AppRouter/Routes/Home'
-import Recent from '../pages/AppRouter/Routes/Recent'
-import Trash from '../pages/AppRouter/Routes/Trash'
+import Home from '../pages/AppRouter/Routes/Home/Home'
+import Recent from '../pages/AppRouter/Routes/Recent/Recent'
+import Trash from '../pages/AppRouter/Routes/Trash/Trash'
 
 export const routes = [
     { path: '/', element: <Home />, exact: true, name: 'My Cloud' },

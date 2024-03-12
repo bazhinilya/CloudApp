@@ -27,7 +27,6 @@ span{
     padding: 10px 8px 6px 16px;
     color: #8b8a8a;
     display: flex;
-    /* justify-content: baseline; */
 }
 
 .sidebar a:hover {

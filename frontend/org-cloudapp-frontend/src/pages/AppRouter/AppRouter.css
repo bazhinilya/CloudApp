@@ -1,13 +1,7 @@
 .app-router {
-    height: 91%;
-    width: 100%;
-}
-
-.routes {
-    border-radius: 20px;
-    margin: 40px;
-    margin-left: 0;
     padding: 20px;
     background-color: #484bbb14;
-    height: 100%;
+    border-radius: 20px;
+    margin: 20px;
+    min-height: 900px;
 }

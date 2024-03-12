@@ -1,24 +1,31 @@
-.my-input-box {
-    margin: 20px;
-}
-
-.my-input {
-    background-color: unset;
-    color: #8b8a8a;
-    border-width: 0px;
-    /* background-image: url('searchicon.png'); */
-    background-repeat: no-repeat;
+.search {
+    padding-top: 10px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 14px;
     width: 100%;
-    font-size: 24px;
-    padding: 20px;
+    transition: box-shadow;
 }
 
-.my-input:hover {
-    border-radius: 20px;
-    background-color: #484bbb14;
+.search-input {
+    font-size: 16px;
+    margin-left: 14px;
+    outline: none;
+    border: none;
+    background: transparent;
+    width: 100%;
+    color: white;
 }
 
-.my-input:focus {
+.search-icon {
+    color: white;
+}
+
+.search:hover,
+.search:focus,
+.search:focus-within {
+    box-shadow: 0 0 2px white;
     border-radius: 20px;
-    background-color: #484bbb14;
+    color: white;
 }
