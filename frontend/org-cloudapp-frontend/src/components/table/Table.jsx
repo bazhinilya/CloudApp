@@ -1,10 +1,11 @@
 import './Table.css'
 
 export default function Table(props) {
-    const data = props.data && props.data.map(file => (
+    const data = props.folder && [...props.folder].map(fild => (
         <tr>
-            <td>{file.extension.name} {file.name}</td>
-            <td>{file.data}</td>
+            <td>{fild.name}</td>
+            <td>{fild.id}</td>
+            <td>{fild.patent_id}</td>
         </tr>
     ))
 

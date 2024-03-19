@@ -13,15 +13,18 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "extension")
+@Table(name = "folder")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Extension {
+public class Folder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    @Column(name = "parent_id")
+    private long parentId;
 }

@@ -2,6 +2,7 @@ import './AppRouter.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { routes } from '../../routes/routes'
 import MyInput from '../../components/UI/MyInput/MyInput'
+import WorkField from './WorkField/WorkField'
 
 export default function AppRouter() {
     return (
@@ -12,7 +13,7 @@ export default function AppRouter() {
                     routes.map((route, index) => <Route
                         exact={route.exact}
                         path={route.path}
-                        element={route.element}
+                        element={<WorkField name={route.name}/>}
                         key={index} />)
                 }
                 <Route path='*' element={<Navigate to='/' replace />} />
