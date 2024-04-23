@@ -2,6 +2,8 @@ package org.cloudapp.backend.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,17 +32,19 @@ public class File {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Folder folder;
-
     @Column(nullable = false)
     private Date dateCreated;
 
+    @JsonIgnore
     @JoinColumn(nullable = false)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private FileData fileData;
 
     @JoinColumn(nullable = false)
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     private ContentType contentType;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Tree tree;
 }
