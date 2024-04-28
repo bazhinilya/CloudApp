@@ -1,21 +1,23 @@
 import './WorkField.css'
 import Table from '../../../components/table/Table'
-import { useEffect, useMemo, useState } from 'react'
-import { getDefaultFolder } from '../../../services/ApiService'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function WorkField(props) {
 
-    const [folder, setFolder] = useState({})
+    const [tree, setTree] = useState({})
 
-    useEffect(async () => {
-        setFolder(await getDefaultFolder('ilya'))
-    }, [folder])
+    useEffect(() => {
+        axios.get(`http://localhost:8080/cd/1`)
+            .then(response => { setTree(response.data) })
+            .catch(error => { console.log(error) })
+    }, [])
     // useMemo(, [folder])
 
     return (
         <div className='work-field'>
             <h1>{props.name}</h1>
-            <Table folder={folder} />
+            <Table tree={tree} />
         </div>
     )
 }
