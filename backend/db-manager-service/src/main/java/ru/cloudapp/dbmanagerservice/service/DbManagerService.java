@@ -21,7 +21,7 @@ import ru.cloudapp.dbmanagerservice.repository.FolderRepository;
 import ru.cloudapp.dbmanagerservice.repository.TreeRepository;
 
 @Service
-public class CloudAppService {
+public class DbManagerService {
 
     @Autowired
     private FolderRepository folderRepository;
